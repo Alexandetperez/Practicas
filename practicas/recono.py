@@ -5,22 +5,22 @@ import pyttsx3
 r = sr.Recognizer()
 engine = pyttsx3.init()
 
-def e(text):
+def say(text):
     engine.say(text)
     engine.runAndWait()
 
 def get_user_name():
     with sr.Microphone() as source:
-        e("Hola, ¿cómo te llamas?")
+        say("Hola, ¿cómo te llamas?")
         audio = r.listen(source)
 
     try:
         user_name = r.recognize_google(audio, language='es-ES')
         return user_name
     except sr.UnknownValueError:
-        e("Lo siento, no pude entender tu nombre.")
+        say("Lo siento, no pude entender tu nombre.")
     except sr.RequestError as e:
-        e("Lo siento, ha ocurrido un error al intentar reconocer tu voz. Error: {}".format(e))
+        say("Lo siento, ha ocurrido un error al intentar reconocer tu voz. Error: {}".format(e))
 
 def get_user_gender(user_name):
     # Obtener el primer nombre del usuario
@@ -36,16 +36,17 @@ def get_user_gender(user_name):
 def greet_user():
     user_name = get_user_name()
     if user_name:
-        user = get_user_gender(user_name)
-        if user:
-            if user == "hombre":
-                e("Hola, señor {}. ¡Bienvenido!".format(user_name))
-            elif user == "mujer":
-                e("Hola, señora {}. ¡Bienvenida!".format(user_name))
+        user_gender = get_user_gender(user_name)
+        if user_gender:
+            if user_gender == "hombre":
+                say("Hola, señor {}. ¡Bienvenido!".format(user_name))
+            elif user_gender == "mujer":
+                say("Hola, señora {}. ¡Bienvenida!".format(user_name))
             else:
-                e("Lo siento, no pude identificar tu género.")
+                say("Lo siento, no pude identificar tu género.")
         else:
-            e("Lo siento, no pude identificar tu género.")
+            say("Lo siento, no pude identificar tu género.")
     else:
-        e("Lo siento, no pude entender tu nombre.") 
-greet_user() # Saludar al usuario
+        say("Lo siento, no pude entender tu nombre.") 
+
+greet_user()
