@@ -48,4 +48,4 @@ def greet_user():
             e("Lo siento, no pude identificar tu género.")
     else:
         e("Lo siento, no pude entender tu nombre.") 
-greet_user()
+greet_user() # Saludar al usuario
